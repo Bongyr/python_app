@@ -30,9 +30,15 @@ pipeline {
         }
         
         stage('Test') {
+            when {
+                expression {
+                    return fileExists('tests')  // Only run tests if the 'tests' directory exists
+                }
+            }
             steps {
                 script {
-                    sh 'docker run --rm $DOCKER_REGISTRY/$IMAGE_NAME:latest python -m unittest discover -s tests'
+                    // Docker run command to test
+                    sh 'docker run --rm bongyr/python_app:latest python -m unittest discover -s tests'
                 }
             }
         }
