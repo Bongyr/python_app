@@ -2,16 +2,10 @@ import unittest
 import requests
 
 class TestAPI(unittest.TestCase):
-
     def test_api_response(self):
-        url = "http://127.0.0.1:5000/ping"
-        response = requests.get(url)
-        
-        # Перевірка, чи відповідає код статусу 200
+        response = requests.get('http://localhost:5000/ping')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.text, 'pong')
 
-        # Перевірка наявності конкретної інформації у відповіді
-        self.assertIn("expected_value", response.text)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
