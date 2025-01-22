@@ -4,7 +4,7 @@ import requests
 class TestAPI(unittest.TestCase):
 
     def test_api_response(self):
-        url = "http://127.0.0.1:5000/api/endpoint"  # Замість цього використовуйте правильний URL вашого API
+        url = "http://127.0.0.1:5000/ping"
         response = requests.get(url)
         
         # Перевірка, чи відповідає код статусу 200
