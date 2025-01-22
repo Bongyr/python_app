@@ -9,9 +9,17 @@ pipeline {
      stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[
+                        url: 'git@github.com:Bongyr/python-app.git',
+                        credentialsId: 'github-ssh-credentials-id'
+                        ]]
+                    ])
+                }
             }
-        }
+        }   
         
         stage('Build') {
             steps {
