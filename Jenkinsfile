@@ -14,7 +14,7 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: 'github-ssh-credentials-id', keyFileVariable: 'GIT_SSH_KEY')]) {
                         sh '''
                         git config core.sshCommand "ssh -i $GIT_SSH_KEY"
-                        git clone git@github.com:Bongyr/python_app.git
+                        git clone git@github.com:Bongyr/python_app.git python_docker
                         '''
                         }
                     }    
