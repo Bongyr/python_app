@@ -1,5 +1,6 @@
 import unittest
 import requests
+import json
 
 class TestAPI(unittest.TestCase):
     def test_api_response(self):
