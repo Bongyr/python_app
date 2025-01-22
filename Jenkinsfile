@@ -51,8 +51,28 @@ pipeline {
          stage('Test') {
             steps {
                 script {
-                    // Docker run command to test
-                    sh 'docker run --rm bongyr/python_app:latest python -m unittest discover -s tests'
+                    def retryCount = 0
+                    def maxRetries = 5
+                    def appAvailable = false
+        
+                    // Retry logic to check if Flask app is up
+                    while (retryCount < maxRetries && !appAvailable) {
+                        try {
+                            sh 'curl http://localhost:5000'
+                            appAvailable = true
+                        } catch (Exception e) {
+                            retryCount++
+                            echo "Flask app not ready, retrying... (${retryCount}/${maxRetries})"
+                            sleep(5)  // Wait for 5 seconds before retrying
+                        }
+                    }
+        
+                    // If Flask app is ready, run tests
+                    if (appAvailable) {
+                        sh 'docker run --rm bongyr/python_app:latest python -m unittest discover -s tests'
+                    } else {
+                        error "Flask app is not available after ${maxRetries} retries"
+                    }
                 }
             }
         }
