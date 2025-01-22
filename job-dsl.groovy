@@ -7,7 +7,7 @@ pipelineJob('Python-Docker-App-Pipeline') {
                 git {
                     remote {
                         url('https://github.com/Bongyr/python-app.git')
-                        credentials('github-credentials-id')
+                        credentials('github-ssh-credentials-id')
                     }
                     branch('main')
                 }
