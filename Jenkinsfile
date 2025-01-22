@@ -33,11 +33,6 @@ pipeline {
         }
         
         stage('Test') {
-            when {
-                expression {
-                    return fileExists('tests')  // Only run tests if the 'tests' directory exists
-                }
-            }
             steps {
                 script {
                     // Docker run command to test
