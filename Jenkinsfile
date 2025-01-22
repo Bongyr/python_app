@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        NETWORK_NAME = 'monitoring-network'
         IMAGE_NAME = 'python_app'
         DOCKER_REGISTRY = 'bongyr'
         GIT_SSH_KEY = credentials('github-ssh-credentials-id')
@@ -44,7 +45,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker run -d -p 5000:5000 $DOCKER_REGISTRY/$IMAGE_NAME:latest'
+                    sh "docker network create ${NETWORK_NAME} || echo 'Network ${NETWORK_NAME} already exists'"
+                    sh """
+                     docker run -d --name flask_app \\
+                        --network ${NETWORK_NAME} \\
+                        -p 5000:5000 \\
+                        $DOCKER_REGISTRY/$IMAGE_NAME:latest
+                    """
+                    
                 }
             }
         }
