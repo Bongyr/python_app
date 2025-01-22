@@ -69,7 +69,7 @@ pipeline {
         
                     // If Flask app is ready, run tests
                     if (appAvailable) {
-                        sh 'docker run --rm bongyr/python_app:latest python -m unittest discover -s tests'
+                        sh 'docker run --rm --network host bongyr/python_app:latest python -m unittest discover -s tests'
                     } else {
                         error "Flask app is not available after ${maxRetries} retries"
                     }
