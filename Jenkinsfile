@@ -31,15 +31,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Test') {
-            steps {
-                script {
-                    // Docker run command to test
-                    sh 'docker run --rm bongyr/python_app:latest python -m unittest discover -s tests'
-                }
-            }
-        }
 
         stage('Push to Registry') {
             steps {
@@ -54,6 +45,14 @@ pipeline {
             steps {
                 script {
                     sh 'docker run -d -p 5000:5000 $DOCKER_REGISTRY/$IMAGE_NAME:latest'
+                }
+            }
+        }
+         stage('Test') {
+            steps {
+                script {
+                    // Docker run command to test
+                    sh 'docker run --rm bongyr/python_app:latest python -m unittest discover -s tests'
                 }
             }
         }
