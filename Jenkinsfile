@@ -4,22 +4,23 @@ pipeline {
     environment {
         IMAGE_NAME = 'python-app'
         DOCKER_REGISTRY = 'Bongyr'
+        GIT_SSH_KEY = credentials('github-ssh-credentials-id')
     }
 
      stages {
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[
-                        url: 'git@github.com:Bongyr/python-app.git',
-                        credentialsId: 'github-ssh-credentials-id'
-                        ]]
-                    ])
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'github-ssh-credentials-id', keyFileVariable: 'GIT_SSH_KEY')]) {
+                        sh '''
+                        git config core.sshCommand "ssh -i $GIT_SSH_KEY"
+                        git clone git@github.com:Bongyr/python-app.git
+                        '''
+                        }
+                    }    
                 }
             }
-        }   
+        }  
         
         stage('Build') {
             steps {
