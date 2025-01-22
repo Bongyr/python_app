@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'python-app'
+        IMAGE_NAME = 'python_app'
         DOCKER_REGISTRY = 'Bongyr'
         GIT_SSH_KEY = credentials('github-ssh-credentials-id')
     }
