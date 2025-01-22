@@ -2,9 +2,9 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-@app.route('/ping', methods=['GET'])
+@app.route('/ping')
 def ping():
-    return jsonify({"message": "pong"}), 200
+    return jsonify(message="pong")
 @app.route('/')
 def home():
     return "Hello, World!"
