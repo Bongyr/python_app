@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'python_app'
-        DOCKER_REGISTRY = 'Bongyr'
+        DOCKER_REGISTRY = 'bongyr'
         GIT_SSH_KEY = credentials('github-ssh-credentials-id')
     }
 
