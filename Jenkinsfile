@@ -6,16 +6,10 @@ pipeline {
         DOCKER_REGISTRY = 'Bongyr'
     }
 
-    stage('Checkout') {
+     stages {
+        stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/Bongyr/python-app.git',
-                        credentialsId: 'github-credentials-id'
-                    ]]
-                ])
+                checkout scm
             }
         }
         
